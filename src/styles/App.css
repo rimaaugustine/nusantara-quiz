@@ -1,6 +1,9 @@
 .App {
-
   max-height: 100vh;
+}
+
+.Navlink{
+  color: #fff
 }
 
 .App-logo {

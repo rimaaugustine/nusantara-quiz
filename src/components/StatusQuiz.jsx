@@ -9,6 +9,10 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import NavigateNext from '@material-ui/icons/NavigateNext';
 import Typography from '@material-ui/core/Typography';
 
+//redux
+import { connect } from "react-redux";
+import compose from 'recompose/compose';
+
 
 const styles = (theme) => ({
   text: {
@@ -46,7 +50,7 @@ const styles = (theme) => ({
 
 class StatusQuiz extends Component {
   render() {
-    const { classes } = this.props;
+    const { classes, username } = this.props;
     return (
       <div>
         <AppBar position='fixed' color='primary' className={classes.appBar}>
@@ -54,7 +58,7 @@ class StatusQuiz extends Component {
             <IconButton color='inherit' aria-label='Open drawer'>
               <AccountCircle />
               <Typography variant='h6' color='inherit'>
-                Bear -
+                {username} -
               </Typography>
              
               <Typography variant='h6' color='inherit' style={{marginLeft:5}}>
@@ -73,7 +77,23 @@ class StatusQuiz extends Component {
 }
 
 StatusQuiz.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  username: PropTypes.string.isRequired
 };
 
-export default withStyles(styles)(StatusQuiz);
+
+const mapStateToProps = state => ({
+  //from ../reducers/index
+  username: state.data.username
+}); 
+
+
+export default compose(
+  withStyles(styles),
+  connect(mapStateToProps, { })
+)(StatusQuiz);
+
+
+
+
+

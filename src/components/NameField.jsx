@@ -7,7 +7,10 @@ import classNames from 'classnames';
 import red from '@material-ui/core/colors/red';
 
 import { NavLink } from 'react-router-dom';
-
+//redux
+import compose from 'recompose/compose';
+import { connect } from "react-redux";
+import {addUsername} from "../actions/quizAction";
 
 const styles = (theme) => ({
   container: {
@@ -28,21 +31,24 @@ const styles = (theme) => ({
 });
 
 class NameField extends Component {
-  state = {
-    name: 'Cat in the Hat'
+  
+
+  handleChange = (event) => {
+    this.props.addUsername(event.target.value)
+    
   };
 
-  handleChange = (name) => (event) => {
-    this.setState({
-      [name]: event.target.value
-    });
-    console.log(name);
-  };
+  handleSubmit(event) {
+    event.preventDefault();
+  }
+
 
   render() {
-    const { classes } = this.props;
+    const { classes, username } = this.props;
+    console.log(username)
     return (
       <div>
+        <form onSubmit={this.handleSubmit}>
         <TextField
           id='outlined-textarea'
           label='Fill your name'
@@ -51,6 +57,8 @@ class NameField extends Component {
           className={classes.textField}
           margin='normal'
           variant='outlined'
+          value={username}
+          onChange={this.handleChange}
         />
         <div>
           <Button
@@ -59,18 +67,33 @@ class NameField extends Component {
             className={classNames(classes.button)}
             size="large"
             component={NavLink}
+            type="submit"
             to="/quiz"
           >
             Ready to Quiz??
           </Button>
         </div>
+        </form>
       </div>
     );
   }
 }
 
 NameField.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  username: PropTypes.string.isRequired
 };
 
-export default withStyles(styles)(NameField);
+
+const mapStateToProps = state => ({
+  //from ../reducers/index
+  username: state.data.username
+}); 
+
+
+export default compose(
+  withStyles(styles),
+  connect(mapStateToProps, { addUsername })
+)(NameField);
+
+
