@@ -10,7 +10,6 @@ export default class OpeningPage extends Component {
         <header className='App-header'>
           <IndonesiaFlag/>
           <br/>
-        
           <p>
            Welcome to Nusantara Quiz
           </p>

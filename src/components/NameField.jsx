@@ -5,6 +5,10 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import classNames from 'classnames';
 import red from '@material-ui/core/colors/red';
+
+import { NavLink } from 'react-router-dom';
+
+
 const styles = (theme) => ({
   container: {
     flexWrap: 'wrap'
@@ -51,9 +55,11 @@ class NameField extends Component {
         <div>
           <Button
             variant='contained'
-            color='#000'
+            color='inherit'
             className={classNames(classes.button)}
             size="large"
+            component={NavLink}
+            to="/quiz"
           >
             Ready to Quiz??
           </Button>
