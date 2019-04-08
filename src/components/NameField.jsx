@@ -6,11 +6,11 @@ import TextField from '@material-ui/core/TextField';
 import classNames from 'classnames';
 import red from '@material-ui/core/colors/red';
 
-import { NavLink } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 //redux
 import compose from 'recompose/compose';
 import { connect } from "react-redux";
-import {addUsername} from "../actions/quizAction";
+import { addUsername } from "../actions/quizAction";
 
 const styles = (theme) => ({
   container: {
@@ -31,23 +31,32 @@ const styles = (theme) => ({
 });
 
 class NameField extends Component {
-  
-
-  handleChange = (event) => {
-    this.props.addUsername(event.target.value)
-    
-  };
-
-  handleSubmit(event) {
-    event.preventDefault();
+  constructor(props){
+    super(props);
+    this.state={
+      name: ""
+    }
   }
 
+  handleChange = (event) => {
+  //  console.log(event.target.value)
+   const value = event.target.value
+   this.setState({name: value})
+ 
+  };
+
+  handleSubmit=(event)=> {
+    event.preventDefault();
+    this.props.addUsername(this.state.name)
+    this.props.history.push("/quiz")
+  }
 
   render() {
-    const { classes, username } = this.props;
+   const {name} = this.state
+    const { classes } = this.props;
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
+        <form method="POST" onSubmit={this.handleSubmit}>
         <TextField
           id='outlined-textarea'
           label='Fill your name'
@@ -56,21 +65,35 @@ class NameField extends Component {
           className={classes.textField}
           margin='normal'
           variant='outlined'
-          value={username}
+          value={this.state.name}
           onChange={this.handleChange}
         />
         <div>
-          <Button
+          {name.length === 0 ?
+             <Button
+             variant='contained'
+             color='inherit'
+             type="submit"
+             value="submit"
+             className={classNames(classes.button)}
+             size="large"
+             disabled
+           >
+             Ready for Quiz??
+           </Button>:
+            <Button
             variant='contained'
             color='inherit'
+            type="submit"
+            value="submit"
             className={classNames(classes.button)}
             size="large"
-            component={NavLink}
-            type="submit"
-            to="/quiz"
+        
           >
             Ready for Quiz??
           </Button>
+          }
+         
         </div>
         </form>
       </div>
@@ -93,7 +116,7 @@ const mapStateToProps = state => ({
 
 export default compose(
   withStyles(styles),
-  connect(mapStateToProps, { addUsername })
+  connect(mapStateToProps, { addUsername }),(withRouter)
 )(NameField);
 
 
