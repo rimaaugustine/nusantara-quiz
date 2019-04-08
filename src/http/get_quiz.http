@@ -1,0 +1,2 @@
+GET https://cdn.contentful.com/spaces/yadj1kx9rmg0/environments/staging/content_types/2PqfXUJwE8qSYKuM0U6w8M?access_token=fdb4e7a3102747a02ea69ebac5e282b9e44d28fb340f778a4f5e788625a61abe HTTP/1.1
+Content-Type: application/json

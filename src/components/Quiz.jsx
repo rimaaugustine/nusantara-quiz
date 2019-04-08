@@ -2,8 +2,19 @@ import React, { Component } from 'react'
 import QuizLayout from './QuizLayout.js'
 import StatusQuiz from './StatusQuiz'
 
-export default class Quiz extends Component {
+//redux
+
+import { connect } from "react-redux";
+import {fetchQuiz} from "../actions/quizAction";
+
+
+class Quiz extends Component {
+
+componentDidMount(){
+  this.props.fetchQuiz()
+}
   render() {
+    console.log(this.props.quiz)
     return (
       <div>
         <div style={{margin:20}}>
@@ -14,3 +25,15 @@ export default class Quiz extends Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+  //from ../reducers/index
+  quiz: state.data.quiz
+}); 
+
+
+export default 
+  connect(mapStateToProps, { fetchQuiz })(Quiz);
+
+
+

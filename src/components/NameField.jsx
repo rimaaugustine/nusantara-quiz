@@ -45,7 +45,6 @@ class NameField extends Component {
 
   render() {
     const { classes, username } = this.props;
-    console.log(username)
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
