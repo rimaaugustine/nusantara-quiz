@@ -69,7 +69,7 @@ class NameField extends Component {
             type="submit"
             to="/quiz"
           >
-            Ready to Quiz??
+            Ready for Quiz??
           </Button>
         </div>
         </form>
@@ -86,7 +86,8 @@ NameField.propTypes = {
 
 const mapStateToProps = state => ({
   //from ../reducers/index
-  username: state.data.username
+  username: state.data.username,
+  
 }); 
 
 

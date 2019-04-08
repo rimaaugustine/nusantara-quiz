@@ -1,5 +1,6 @@
 .App {
-  max-height: 100vh;
+  min-height: 100vh;
+  background-color: #fafafa;
 }
 
 .Navlink{
@@ -14,7 +15,6 @@
 
 .App-header {
   text-align: center;
-  background-color: #fafafa;
   height: 90vh;
   overflow-y: hidden;
   display: flex;

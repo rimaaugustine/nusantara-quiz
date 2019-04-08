@@ -8,7 +8,14 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Button from '@material-ui/core/Button';
 
+//redux
+import compose from 'recompose/compose';
+import { connect } from "react-redux";
+import {resetScore} from "../actions/quizAction";
+
 import { NavLink } from 'react-router-dom';
+
+
 
 const styles = {
   root: {
@@ -28,18 +35,22 @@ const styles = {
 };
 
 function Navbar(props) {
+
+  const handleBackHome = () => {
+    props.resetScore()
+  }
   const { classes } = props;
   return (
     <div className={classes.root}>
       <AppBar className={classes.bar} position='static'>
         <Toolbar variant='dense'>
-          <NavLink to='/'>
+          <NavLink to='/' onClick={handleBackHome}>
             <IconButton
               className={classes.menuButton}
               color='inherit'
               aria-label='Menu'
             >
-              <MenuIcon />
+              <MenuIcon  />
             </IconButton>
           </NavLink>
           <Typography variant='h6' color='inherit' className={classes.grow}>
@@ -56,4 +67,8 @@ Navbar.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Navbar);
+export default compose(
+  withStyles(styles),
+  connect(null, {resetScore })
+)(Navbar);
+

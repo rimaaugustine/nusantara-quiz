@@ -50,7 +50,7 @@ const styles = (theme) => ({
 
 class StatusQuiz extends Component {
   render() {
-    const { classes, username } = this.props;
+    const { classes, username, score } = this.props;
     return (
       <div>
         <AppBar position='fixed' color='primary' className={classes.appBar}>
@@ -62,7 +62,7 @@ class StatusQuiz extends Component {
               </Typography>
              
               <Typography variant='h6' color='inherit' style={{marginLeft:5}}>
-                 score: 0
+                 score: {score}
               </Typography>
             </IconButton>
             <Fab color="secondary" aria-label="Add" className={classes.fabButton}>
@@ -84,7 +84,8 @@ StatusQuiz.propTypes = {
 
 const mapStateToProps = state => ({
   //from ../reducers/index
-  username: state.data.username
+  username: state.data.username, 
+  score: state.data.score
 }); 
 
 
