@@ -6,7 +6,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Fab from '@material-ui/core/Fab';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import NavigateNext from '@material-ui/icons/NavigateNext';
 import Typography from '@material-ui/core/Typography';
 
 //redux
@@ -50,7 +49,8 @@ const styles = (theme) => ({
 
 class StatusQuiz extends Component {
   render() {
-    const { classes, username, score } = this.props;
+    const { classes, username, score, counter} = this.props;
+    // console.log(counter)
     return (
       <div>
         <AppBar position='fixed' color='primary' className={classes.appBar}>
@@ -66,8 +66,8 @@ class StatusQuiz extends Component {
               </Typography>
             </IconButton>
             <Fab color="secondary" aria-label="Add" className={classes.fabButton}>
-            <NavigateNext />
-          </Fab>
+             <h2>#{counter}</h2>
+            </Fab>
            
           </Toolbar>
         </AppBar>
@@ -85,13 +85,14 @@ StatusQuiz.propTypes = {
 const mapStateToProps = state => ({
   //from ../reducers/index
   username: state.data.username, 
-  score: state.data.score
+  score: state.data.score,
+  counter: state.data.counter
 }); 
 
 
 export default compose(
   withStyles(styles),
-  connect(mapStateToProps, { })
+  connect(mapStateToProps, {})
 )(StatusQuiz);
 
 

@@ -37,6 +37,7 @@ const styles = {
 function Navbar(props) {
 
   const handleBackHome = () => {
+    alert("are you sure to exit the quiz?")
     props.resetScore()
   }
   const { classes } = props;

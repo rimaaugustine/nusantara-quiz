@@ -39,7 +39,6 @@ class NameField extends Component {
   }
 
   handleChange = (event) => {
-  //  console.log(event.target.value)
    const value = event.target.value
    this.setState({name: value})
  

@@ -35,17 +35,22 @@ export const resetScore = () => (dispatch) => {
   });
 };
 
-export const getNextQuestion = (object) => (dispatch) => {
-  console.log(object)
+export const getPrevQuestions = (questions) => (dispatch) => {
+  dispatch({
+    type: GET_OLD_QUESTIONS,
+    payload: questions
+  })
+} 
 
+export const getNextQuestion = (object) => (dispatch) => {
+    //console.log(object)
   let random
   if(object.length !== 0){
-    console.log(object)
+    // console.log(object)
      random = object[Math.floor(Math.random() * object.length)];
   }else{
     random = {}
   }
- 
   dispatch({
     type: GET_NEXT_QUESTION,
     payload: object,
@@ -60,7 +65,7 @@ export const fetchQuiz = () =>  (dispatch) => {
       const entriesItems = entries.items
       const random = entriesItems[Math.floor(Math.random() * entriesItems.length)];
       const randomId = random.sys.id
-     const entryFiltered = entriesItems.filter(entry => entry.sys.id !== randomId)
+      const entryFiltered = entriesItems.filter(entry => entry.sys.id !== randomId)
      
       dispatch({
               type: FETCH_QUIZ_SUCCESS,
@@ -68,25 +73,10 @@ export const fetchQuiz = () =>  (dispatch) => {
               payload1: random
             })
     })
-    // entries.items.forEach(entry => {
-    //   if(entry.fields) {
-    //     dispatch({
-    //       type: FETCH_QUIZ,
-    //       payload: entry.fields
-    //     })
-    //   }
-    // })
     .catch(error => {
       dispatch({type: FETCH_QUIZ_FAILURE, payload: error})
     console.error('error fetch the content', error)
   })
 };
 
-
-export const getOldQuestions = (questions) => (dispatch) => {
-  dispatch({
-    type: GET_OLD_QUESTIONS,
-    payload: questions
-  })
-} 
 

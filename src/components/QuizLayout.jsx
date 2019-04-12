@@ -1,105 +1,129 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-
-
-
-import ImageQuestion from '../styles/jakarta.jpeg'
-
+import Choices from './Choices';
 //redux
 import compose from 'recompose/compose';
-import { connect } from "react-redux";
-import {addScore, fetchQuiz} from "../actions/quizAction";
+import { connect } from 'react-redux';
+import { addScore, fetchQuiz } from '../actions/quizAction';
 
-
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   paper: {
     padding: theme.spacing.unit * 2,
     textAlign: 'center',
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.primary,
+    backgroundColor: '#fff'
   },
+  paperHov: {
+    padding: theme.spacing.unit * 2,
+    textAlign: 'center',
+    backgroundColor: '#b71c1c',
+    color: '#fff'
+  }
 });
 
 
-class QuizLayout extends Component   {
-  constructor(props){
-    super(props);
-    this.state ={
-     
-    }
-  }
-
- 
+class QuizLayout extends Component {
   onHandleAnswer = (e) => {
-   const answer = e.currentTarget.id
-    if( answer === this.props.answer){
-      this.props.addScore(10)
-      alert("true")
-    }else{
-    alert("false")
+    const answer = e.currentTarget.id;
+    if (answer === this.props.answer) {
+      this.props.addScore(10);
+      alert('true');
+    } else {
+      this.props.addScore(0);
+      alert('false');
     }
-    console.log(this.compare())
-    this.props.getCompareData(this.compare())
-    
-  }
 
- compare = () => {
-  const { quiz, oldQuestions, questionState} = this.props;
-  const oldQuestionsId = oldQuestions.map(question => question.sys.id)
-  const questionId = questionState.sys.id
-  console.log(oldQuestionsId)
+    this.props.getCompareData(this.compare());
+  };
+
+  
+  compare = () => {
+    const { questionEntries, prevQuestions, currentQuestion } = this.props;
+    const oldQuestionsId = prevQuestions.map((question) => question.sys.id);
+    const questionId = currentQuestion.sys.id;
+
     let quizFiltered;
-    if(quiz.length !== 0){   
-       quizFiltered = quiz.filter(entry => !oldQuestionsId.includes(entry.sys.id) && entry.sys.id !== questionId )
-
+    if (questionEntries.length !== 0) {
+      quizFiltered = questionEntries.filter(
+        (entry) =>
+          !oldQuestionsId.includes(entry.sys.id) && entry.sys.id !== questionId
+      );
     }
-    return quizFiltered
+    return quizFiltered;
+  };
 
-  
-  }
-  
+  shuffle = (array) => {
+    var currentIndex = array.length,
+      temporaryValue,
+      randomIndex;
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+    return array;
+  };
 
-  render(){
-    const { classes, choices, question } = this.props;
-  return (
-    <div className={classes.root}>
-    
-      <Grid container spacing={24}>
-        <Grid item xs={12}>
-          <Paper className={classes.paper}><h2>{question}</h2>
-          <img src={ImageQuestion} height="120" alt="img-choice" />
-          </Paper>
+  render() {
+    const { classes, choices, question, imageTitle, imageUrl } = this.props;
+
+    return (
+      <div className={classes.root}>
+        <Grid container spacing={24}>
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>
+              <h2>{question}</h2>
+              <img style={{maxWidth:'20%', height:'auto'}} src={imageUrl} alt={imageTitle} />
+            </Paper>
+          </Grid>
+          {choices
+            ? this.shuffle(choices).map((choice, i) => (
+                <Grid key={i} item xs={12} sm={6}>
+                  <Choices
+                    onClick={this.onHandleAnswer}
+                    paperclass={classes.paper}
+                    paperclasshov={classes.paperHov}
+                    id={choice}
+                  >
+                    {choice}
+                  </Choices>
+                </Grid>
+              ))
+            : []}
         </Grid>
-        {choices? choices.map((choice, i) =>  <Grid key={i} item xs={12} sm={6}>
-          <Paper onClick={this.onHandleAnswer} id={choice} className={classes.paper} style={{ backgroundColor:"#fff",color:"black"}}>{choice}</Paper>
-        </Grid> ) : []}
-       
-      </Grid>
-    </div>)
+        <br/>
+        <br/>
+      </div>
+    );
   }
-  
- 
 }
 
 QuizLayout.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   //from ../reducers/index
-  quiz: state.data.quiz,
-  questionState: state.data.question,
-  oldQuestions: state.data.oldQuestions,
-}); 
-
-
+  questionEntries: state.data.questionEntries,
+  currentQuestion: state.data.currentQuestion,
+  prevQuestions: state.data.prevQuestions
+});
 
 export default compose(
   withStyles(styles),
-  connect(mapStateToProps, { addScore, fetchQuiz})
+  connect(
+    mapStateToProps,
+    { addScore, fetchQuiz }
+  )
 )(QuizLayout);

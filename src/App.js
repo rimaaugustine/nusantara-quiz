@@ -11,7 +11,7 @@ import  Navbar from "./components/Navbar.jsx"
 import OpeningPage from "./components/OpeningPage.jsx"
 import About from "./components/About.js"
 import Quiz from "./components/Quiz"
-import FinalPage from "./components/FinalPage";
+
 
 
 class App extends Component {
@@ -24,7 +24,6 @@ class App extends Component {
         <Route path="/" exact component={OpeningPage} />
         <Route path="/about/" component={About} />
         <Route path="/quiz/" component={Quiz} />
-        <Route path="/final/" component={FinalPage} />
       </div>
       </Router>
       </Provider>

@@ -11,11 +11,11 @@ import {
 
 const initialState = {
   username: '',
-  quiz: [],
-  oldQuestions: [],
-  question: {},
+  questionEntries: [],
+  prevQuestions: [],
+  currentQuestion: {},
   score: 0,
-  counter: 0,
+  counter: 1,
   isFetching: false,
   error: false,
 };
@@ -36,27 +36,27 @@ export default function quizReducer(state = initialState, action) {
       return {
         ...state,
         isFetching: false, 
-        quiz: action.payload,
-        question: action.payload1,
-        oldQuestions:  [...state.oldQuestions, action.payload1]
+        questionEntries: action.payload,
+        currentQuestion: action.payload1,
+        prevQuestions:  [...state.prevQuestions, action.payload1]
       }; 
     case FETCH_QUIZ_FAILURE:
       return {
         ...state,
         isFetching: false, 
-        error: action.payload
+        error: true
       }; 
     case GET_NEXT_QUESTION:
       return {
         ...state,
-        quiz:  action.payload,
-        question: action.payload1
+        questionEntries:  action.payload,
+        currentQuestion: action.payload1
 
       };   
     case GET_OLD_QUESTIONS:
       return {
         ...state,
-        oldQuestions:   [...state.oldQuestions, action.payload]
+        prevQuestions:   [...state.prevQuestions, action.payload]
       }; 
     case ADD_SCORE:
       return {
@@ -69,9 +69,10 @@ export default function quizReducer(state = initialState, action) {
         ...state,
         score: 0,
         counter: 0,
-        quiz: [],
-        question: {},
-        oldQuestions: []
+        questionEntries: [],
+        currentQuestion: {},
+        prevQuestions: [],
+        username: '',
       }; 
     default:
       return state;
