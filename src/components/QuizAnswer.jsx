@@ -62,7 +62,7 @@ constructor(props){
                   if(choice===answer){
                     styleChoice=classes.answeredColorCorr;
                   }else if(choice === this.state.userAnswer){
-                    styleChoice=classes.paperHov;
+                    styleChoice=classes.answeredColorWrong;
                   }else{
                     styleChoice=classes.answeredColor;
                   }

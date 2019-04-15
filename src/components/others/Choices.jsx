@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 
+import compose from 'recompose/compose';
+import { connect } from 'react-redux';
 
 const styles = () => ({
   root: {
@@ -13,7 +15,8 @@ class Choices extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      hover: false
+      hover: false,
+      userAnswered : this.props.isanswered
     };
   }
 
@@ -28,19 +31,48 @@ class Choices extends Component {
   
   };
   render() {
+    const {isanswered} = this.props;
     return (
+     
       <div>
-        <Paper
-          {...this.props}
-          onMouseOver={this.onHover}
-          onMouseOut={this.onLeave}
-          className={this.state.hover ? this.props.paperclasshov: this.props.paperclass} 
-        >
-          {this.props.children}
-        </Paper>
+        {isanswered === "false"?  <Paper
+       {...this.props}
+       onMouseOver={this.onHover}
+       onMouseOut={this.onLeave}
+       className={this.state.hover ? this.props.paperclasshov: this.props.paperclass} 
+     >
+       {this.props.children}
+     </Paper>
+     : <Paper
+     {...this.props}
+     onMouseOver={this.onHover}
+     onMouseOut={this.onLeave}
+     className={ this.props.paperclass} 
+   >
+     {this.props.children}
+   </Paper>
+    }
+      
+       
       </div>
     );
   }
 }
 
-export default withStyles(styles)(Choices);
+
+
+const mapStateToProps = (state) => ({
+  //from ../reducers/index
+  isanswered: (state.data.isAnswered).toString()
+});
+
+
+export default compose(
+  withStyles(styles),
+  connect(
+    mapStateToProps,
+    {}
+  )
+)(Choices);
+
+

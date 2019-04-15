@@ -51,14 +51,15 @@ class Navbar extends Component {
   
   handleCloseYes = () => {
     this.setState({ openDialog: false });
-    this.props.history.push("/")
+    this.props.history.push("/nusantara-quiz")
+    this.props.resetScore()
   };
   
   handleBackHome = () => {
     if(this.props.counter >0){
       this.setState({ openDialog: true})
     }else{
-      this.props.history.push("/")
+      this.props.history.push("/nusantara-quiz")
     }
   }
  

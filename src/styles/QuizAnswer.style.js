@@ -26,8 +26,8 @@ export const styles = (theme) => ({
     paperHov: {
       padding: theme.spacing.unit * 2,
       textAlign: 'center',
-      backgroundColor: '#b71c1c',
-      color: '#fff'
+      color: theme.palette.text.primary,
+      backgroundColor: '#b0bec5',
     },
     answeredColor:{
       padding: theme.spacing.unit * 2,
@@ -40,6 +40,13 @@ export const styles = (theme) => ({
       textAlign: 'center',
       color: theme.palette.text.primary,
       backgroundColor: '#558b2f',
+    },
+    answeredColorWrong:{
+      padding: theme.spacing.unit * 2,
+      textAlign: 'center',
+      color: '#fff',
+      backgroundColor: '#b71c1c',
     }
+    
   });
   
