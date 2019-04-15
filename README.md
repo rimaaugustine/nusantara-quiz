@@ -1,5 +1,5 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-The content of the Quiz was using Contentful Delivery API service https://www.contentful.com
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).<br>
+The content of the Quiz was using Contentful Delivery API service https://www.contentful.com.<br>
 Live on : https://rimaaugustine.github.io/nusantara-quiz
 
 ## Available Scripts
