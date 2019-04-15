@@ -1,5 +1,5 @@
 import React from 'react'
-import '../styles/flag.scss';
+import '../../styles/flag.scss';
 
 export default function IndonesiaFlag() {
   return (

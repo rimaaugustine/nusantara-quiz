@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../styles/App.css';
-import IndonesiaFlag from './IndonesiaFlag'
-import NameField from './NameField'
+import IndonesiaFlag from './others/IndonesiaFlag'
+import NameField from './others/NameField'
 
 export default class OpeningPage extends Component {
   render() {

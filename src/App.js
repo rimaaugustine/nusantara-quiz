@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 //style
 import  './styles/App.css';
 //components
-import  Navbar from "./components/Navbar.jsx"
+import  Navbar from "./components/others/Navbar.jsx"
 import OpeningPage from "./components/OpeningPage.jsx"
 import About from "./components/About.js"
 import Quiz from "./components/Quiz"

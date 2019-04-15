@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import QuizLayout from './QuizLayout';
-import StatusQuiz from './StatusQuiz';
-import FinalPage from './FinalPage';
-import Loading from './loading';
+import PropTypes from 'prop-types';
 //redux
 import { connect } from 'react-redux';
 import {
@@ -10,34 +7,38 @@ import {
   getPrevQuestions,
   getNextQuestion
 } from '../actions/quizAction';
+//components
+import QuizAnswer from './QuizAnswer';
+import StatusQuiz from './StatusQuiz';
+import FinalPage from './FinalPage';
+import Loading from './others/loading';
 
 
 class Quiz extends Component {
-  constructor(props){
-    super(props);
-    this.state={
-      isLoading : false
-    }
-  }
+
   componentDidMount() {
     //invoke the fetch API action 
     this.props.fetchQuiz();
-  
   }
-
-  componentWillUpdate(nextProps) {
-    //what happened after user click the answer, counter is changed
-    if (nextProps.counter !== this.props.counter) {
-      //then invoke the action to put the question into prevQuestions array
-      this.props.getPrevQuestions(this.props.currentQuestion);
+    //function for shuffling the choices
+  shuffle = (array) => {
+    var currentIndex = array.length,
+      temporaryValue,
+      randomIndex;
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
     }
-  }
-
-  getCompareData = (data) => {
-    this.props.getNextQuestion(data);
+    return array;
   };
 
-  //after answer
+  //after user answer, question move to prevQuestions
   oldQuestionsArray = () => {
     const { currentQuestion } = this.props;
     this.props.getPrevQuestions(currentQuestion);
@@ -45,42 +46,40 @@ class Quiz extends Component {
 
   render() {
     const { isFetching, currentQuestion, counter } = this.props;
-    console.log(currentQuestion)
+    //mapping data from API object
     let mapQuestion;
     let mapChoices;
     let mapAnswer;
     let imageUrl;
     let imageTitle;
-    if (currentQuestion.fields) {
-        mapQuestion = currentQuestion.fields.question 
-        mapAnswer = currentQuestion.fields.answer
-        mapChoices =  currentQuestion.fields.choices
-        imageUrl = currentQuestion.fields.imageQuestion.fields.file.url
-        imageTitle = currentQuestion.fields.imageQuestion.fields.file.title
-    } else {
-      console.log("loading")
-    }
+      if (currentQuestion.fields) {
+          mapQuestion = currentQuestion.fields.question 
+          mapAnswer = currentQuestion.fields.answer
+          mapChoices =  this.shuffle(currentQuestion.fields.choices)
+          imageUrl = currentQuestion.fields.imageQuestion.fields.file.url
+          imageTitle = currentQuestion.fields.imageQuestion.fields.file.title
+      } else {
+      return <Loading/>
+      }
    
-
     return (
       <div>
          {isFetching? (
           <Loading/>
-        ) : (
+          ) : (
           <React.Fragment>
-            {counter <= 10 ? (
+            {counter <= 9  ? (
                <React.Fragment>
               <div style={{ margin: 20 }}>
-              <QuizLayout
-                question={mapQuestion}
-                choices={mapChoices}
-                answer={mapAnswer}
-                getCompareData={this.getCompareData}
-                imageTitle={imageTitle}
-                imageUrl={imageUrl}
-              />
+                <QuizAnswer
+                  question={mapQuestion}
+                  choices={mapChoices}
+                  answer={mapAnswer}
+                  imageTitle={imageTitle}
+                  imageUrl={imageUrl}
+                />
             </div>
-            <StatusQuiz />
+            <StatusQuiz  />
             </React.Fragment>
             ) : (
               <FinalPage/>
@@ -93,11 +92,19 @@ class Quiz extends Component {
   }
 }
 
+Quiz.propTypes = {
+  isFetching: PropTypes.bool.isRequired,
+  currentQuestion: PropTypes.object.isRequired,
+  counter: PropTypes.number.isRequired,
+};
+
+
 const mapStateToProps = (state) => ({
   //from ../reducers/index
   isFetching: state.data.isFetching,
   currentQuestion: state.data.currentQuestion,
-  counter: state.data.counter
+  counter: state.data.counter,
+ 
 });
 
 export default connect(

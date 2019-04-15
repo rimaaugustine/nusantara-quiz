@@ -10,7 +10,7 @@ import { withRouter } from 'react-router-dom';
 //redux
 import compose from 'recompose/compose';
 import { connect } from "react-redux";
-import { addUsername } from "../actions/quizAction";
+import { addUsername } from "../../actions/quizAction";
 
 const styles = (theme) => ({
   container: {

@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/App.css';
+import '../../styles/App.css';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';

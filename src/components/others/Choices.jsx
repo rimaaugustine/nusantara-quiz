@@ -3,7 +3,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 
 
-
 const styles = () => ({
   root: {
     flexGrow: 1
@@ -28,7 +27,6 @@ class Choices extends Component {
     this.setState({ hover: false });
   
   };
-
   render() {
     return (
       <div>
@@ -36,9 +34,7 @@ class Choices extends Component {
           {...this.props}
           onMouseOver={this.onHover}
           onMouseOut={this.onLeave}
-          
           className={this.state.hover ? this.props.paperclasshov: this.props.paperclass} 
-       
         >
           {this.props.children}
         </Paper>

@@ -4,12 +4,16 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
+import ArrowForward from '@material-ui/icons/ArrowForwardIos';
 import Fab from '@material-ui/core/Fab';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Typography from '@material-ui/core/Typography';
 
 //redux
 import { connect } from "react-redux";
+import {
+  getNextQuestion,
+} from '../actions/quizAction';
 import compose from 'recompose/compose';
 
 
@@ -48,9 +52,34 @@ const styles = (theme) => ({
 });
 
 class StatusQuiz extends Component {
+
+
+  //move it to QUIZ
+  compare = () => {
+    const { questionEntries, prevQuestions, currentQuestion } = this.props;
+    const oldQuestionsId = prevQuestions.map((question) => question.sys.id);
+    const questionId = currentQuestion.sys.id;
+
+    let quizFiltered;
+    if (questionEntries.length !== 0) {
+      quizFiltered = questionEntries.filter(
+        (entry) =>
+          !oldQuestionsId.includes(entry.sys.id) && entry.sys.id !== questionId
+      );
+    }
+    return quizFiltered;
+  };
+
+  handleOnClick = () => {
+    this.props.getNextQuestion(this.compare());
+
+  }
+
+
   render() {
-    const { classes, username, score, counter} = this.props;
-    // console.log(counter)
+    
+    const { classes, username, score, isAnswered} = this.props;
+    
     return (
       <div>
         <AppBar position='fixed' color='primary' className={classes.appBar}>
@@ -60,14 +89,19 @@ class StatusQuiz extends Component {
               <Typography variant='h6' color='inherit'>
                 {username} -
               </Typography>
-             
               <Typography variant='h6' color='inherit' style={{marginLeft:5}}>
                  score: {score}
               </Typography>
-            </IconButton>
-            <Fab color="secondary" aria-label="Add" className={classes.fabButton}>
-             <h2>#{counter}</h2>
-            </Fab>
+            </IconButton>{
+              isAnswered?
+              <Fab color="primary"  aria-label="Add" className={classes.fabButton} onClick={this.handleOnClick}>
+              <ArrowForward  />
+              </Fab>:
+               <Fab color="primary" disabled aria-label="Add" className={classes.fabButton} onClick={this.handleOnClick}>
+               <ArrowForward  />
+               </Fab>
+              }
+           
            
           </Toolbar>
         </AppBar>
@@ -86,13 +120,17 @@ const mapStateToProps = state => ({
   //from ../reducers/index
   username: state.data.username, 
   score: state.data.score,
-  counter: state.data.counter
+  counter: state.data.counter,
+  questionEntries: state.data.questionEntries,
+  prevQuestions: state.data.prevQuestions,
+  currentQuestion: state.data.currentQuestion,
+  isAnswered: state.data.isAnswered
 }); 
 
 
 export default compose(
   withStyles(styles),
-  connect(mapStateToProps, {})
+  connect(mapStateToProps, {getNextQuestion})
 )(StatusQuiz);
 
 

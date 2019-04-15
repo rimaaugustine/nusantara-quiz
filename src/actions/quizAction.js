@@ -13,6 +13,7 @@ export const GET_OLD_QUESTIONS = 'GET_OLD_QUESTIONS';
 export const FETCH_QUIZ_REQUEST = 'FETCH_QUIZ_REQUEST';
 export const FETCH_QUIZ_SUCCESS = 'FETCH_QUIZ_SUCCESS';
 export const FETCH_QUIZ_FAILURE = 'FETCH_QUIZ_FAILURE';
+export const ANSWER_STATUS = 'ANSWER_STATUS'
 
 export const addUsername = (username) => (dispatch) => {
   dispatch({
@@ -43,10 +44,8 @@ export const getPrevQuestions = (questions) => (dispatch) => {
 } 
 
 export const getNextQuestion = (object) => (dispatch) => {
-    //console.log(object)
   let random
   if(object.length !== 0){
-    // console.log(object)
      random = object[Math.floor(Math.random() * object.length)];
   }else{
     random = {}
@@ -80,3 +79,8 @@ export const fetchQuiz = () =>  (dispatch) => {
 };
 
 
+export const answerStatus = () => (dispatch) => {
+  dispatch({
+    type: ANSWER_STATUS,
+  });
+};

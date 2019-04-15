@@ -6,7 +6,8 @@ import {
   FETCH_QUIZ_FAILURE,
   ADD_SCORE,
   RESET_SCORE,
-  GET_NEXT_QUESTION
+  GET_NEXT_QUESTION,
+  ANSWER_STATUS,
 } from '../actions/quizAction';
 
 const initialState = {
@@ -14,8 +15,9 @@ const initialState = {
   questionEntries: [],
   prevQuestions: [],
   currentQuestion: {},
+  isAnswered: false,
   score: 0,
-  counter: 1,
+  counter: 0,
   isFetching: false,
   error: false,
 };
@@ -50,8 +52,9 @@ export default function quizReducer(state = initialState, action) {
       return {
         ...state,
         questionEntries:  action.payload,
-        currentQuestion: action.payload1
-
+        currentQuestion: action.payload1,
+        counter: state.counter + 1, 
+        isAnswered: false
       };   
     case GET_OLD_QUESTIONS:
       return {
@@ -62,7 +65,7 @@ export default function quizReducer(state = initialState, action) {
       return {
         ...state,
         score: state.score + action.score,
-        counter: state.counter + 1
+
       }; 
     case RESET_SCORE:
       return {
@@ -74,6 +77,11 @@ export default function quizReducer(state = initialState, action) {
         prevQuestions: [],
         username: '',
       }; 
+    case ANSWER_STATUS:
+    return {
+      ...state, 
+      isAnswered :true
+    }
     default:
       return state;
   }
