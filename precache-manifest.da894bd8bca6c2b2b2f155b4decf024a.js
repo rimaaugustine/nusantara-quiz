@@ -4,19 +4,19 @@ self.__precacheManifest = [
     "url": "/nusantara-quiz/static/js/runtime~main.fdd8e242.js"
   },
   {
-    "revision": "316af4d9a8862894e928",
-    "url": "/nusantara-quiz/static/js/main.f5cd9c53.chunk.js"
+    "revision": "997415c8994b89027d9c",
+    "url": "/nusantara-quiz/static/js/main.449f8617.chunk.js"
   },
   {
     "revision": "f1962f442c989d4144d4",
     "url": "/nusantara-quiz/static/js/2.06d53527.chunk.js"
   },
   {
-    "revision": "316af4d9a8862894e928",
+    "revision": "997415c8994b89027d9c",
     "url": "/nusantara-quiz/static/css/main.a22ce7f5.chunk.css"
   },
   {
-    "revision": "d66b00e00c1dd34d48891b5f53a97437",
+    "revision": "ff4a6a7a736793fb7b65ebf2504ba82b",
     "url": "/nusantara-quiz/index.html"
   }
 ];
