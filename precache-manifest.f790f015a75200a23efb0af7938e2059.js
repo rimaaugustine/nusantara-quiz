@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/nusantara-quiz/static/css/main.a22ce7f5.chunk.css"
   },
   {
-    "revision": "7ad25a7fbd7ad99786f0b8f4db4ec799",
+    "revision": "bf3b4b83791c3d62573fe8ccc7bc238c",
     "url": "/nusantara-quiz/index.html"
   }
 ];
