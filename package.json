@@ -20,7 +20,10 @@
     "react-scripts": "2.1.8",
     "recompose": "^0.30.0",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "bourbon": "^5.1.0",
+    "redux-devtools-extension": "^2.13.8"
+
   },
   "scripts": {
     "build-css": "node-sass-chokidar --include-path ./src --include-path .node_modules src/ -o src/",
@@ -39,10 +42,5 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ],
-  "devDependencies": {
-    "bourbon": "^5.1.0",
-    "redux-devtools-extension": "^2.13.8",
-    "styled-components": "^4.2.0"
-  }
+  ]
 }
