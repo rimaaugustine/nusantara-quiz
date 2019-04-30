@@ -83,7 +83,7 @@ class Navbar extends Component {
           <Typography variant='h6' color='inherit' className={classes.grow}>
             Nusantara-Quiz
           </Typography>
-            <Button component={NavLink} to="/about" color='inherit'>About</Button>
+            <Button component={NavLink} to="/nusantara-quiz/about" color='inherit'>About</Button>
         </Toolbar>
       </AppBar>
       <Dialog open={this.state.openDialog} 
