@@ -47,7 +47,7 @@ class NameField extends Component {
   handleSubmit=(event)=> {
     event.preventDefault();
     this.props.addUsername(this.state.name)
-    this.props.history.push("/nusantara-quiz/quiz")
+    this.props.history.push("/quiz")
   }
 
   render() {

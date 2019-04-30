@@ -47,7 +47,7 @@ class FinalPage extends Component {
             className={classNames(classes.button)}
             size='large'
             component={NavLink}
-            to='/nusantara-quiz'
+            to='/'
             onClick={()=> this.props.resetScore()}
           >
             Try again?
